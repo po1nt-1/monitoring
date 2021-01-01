@@ -19,7 +19,7 @@ def monitor():
 
 
 if __name__ == "__main__":
-    HOST, PORT = '', 55555
+    HOST, PORT = '0.0.0.0', 55555
 
     with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
         server.serve_forever()
