@@ -8,6 +8,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         stats = monitor()
         self.request.sendall(stats.encode(encoding='utf-8'))
+        print('Sended:', stats)
 
 
 def monitor():
@@ -18,7 +19,7 @@ def monitor():
 
 
 if __name__ == "__main__":
-    HOST, PORT = '', 9999
+    HOST, PORT = '', 55555
 
     with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
         server.serve_forever()

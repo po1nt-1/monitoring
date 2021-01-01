@@ -1,9 +1,8 @@
 import json
 import socket
-from time import sleep
 
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 9999
+    HOST, PORT = input('HOST: '), 55555
 
     while True:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
