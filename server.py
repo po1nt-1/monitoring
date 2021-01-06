@@ -44,11 +44,16 @@ def sender():
         while True:
             if step % 2 == 0 and stats and clients:
                 kick_list = []
-                for addr, conn in clients.items():
+                local_clients = clients.copy()
+                for addr, conn in local_clients.items():
                     try:
                         conn.sendall(stats)
                     except BrokenPipeError:
                         kick_list.append(addr)
+                        print(f'{addr}', 'disconnected')
+                    except ConnectionResetError:
+                        kick_list.append(addr)
+                        print(f'{addr}', 'disconnected')
 
                 for ip in kick_list:
                     clients.pop(ip)
@@ -85,6 +90,7 @@ def main():
 
         while True:
             conn, addr = server.accept()
+            print(f'{addr[0]}:{addr[1]}', 'connected')
             if f'{addr[0]}:{addr[1]}' not in clients.keys():
                 clients.update({f'{addr[0]}:{addr[1]}': conn})
 
