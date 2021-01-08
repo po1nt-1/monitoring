@@ -20,7 +20,7 @@ def monitor(period):
 
         time_ = 0
         while True:
-            if time.time() - time_ > period:
+            if time.time() - time_ > period and clients:
                 time_ = time.time()
 
                 print('Monitoring..')
@@ -48,6 +48,7 @@ def sender():
                 for addr, conn in local_clients.items():
                     try:
                         conn.sendall(stats)
+                        print('Sent', stats)
                     except BrokenPipeError:
                         kick_list.append(addr)
                         print(f'{addr}', 'disconnected')
@@ -95,7 +96,7 @@ def main():
                 clients.update({f'{addr[0]}:{addr[1]}': conn})
 
     except IndexError:
-        print('Specify the period in seconds as the parameter!\n'
+        print('Set the period in seconds as the parameter!\n'
               'Like this: python server.py 5')
     except KeyboardInterrupt:
         pass
